@@ -41,11 +41,11 @@ After you have setup the necessary tools needed to retrieve and build the projec
 Once you have retrieved and positioned in the right directory you can build the project as follows:
 
 ```
-5. gradle build
+5. gradle build -x test 
 ```
 
 Gradle will automatically download the necessary project files and definitions needed for this project to compile (i.e., the JUnit library needed for testing).
-If the command was successful, a directory (./classes/) has been created containing the .class files along with the unit test reports.
+If the command was successful, a 'build' directory has been created containing the .class files along with the unit test reports.
 As you might have noticed, tests fail as you need to fill-in the missing code.
 
 To execute the tests only go on and type:
