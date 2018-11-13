@@ -71,9 +71,11 @@ This exercise makes the following assumptions:
 1. the client knows the hash of the merkle tree root;
 2. the server sends the client a linear sequence of hash values.
 
-Once the client receives the linear sequence of hashes can proceed to compute the resulting root hash value. A transaction is considered valid if the computed root hash value matches the one the client has.
+Once the client receives the linear sequence of hashes can proceed to compute the resulting root hash value. A transaction is considered valid if the computed root hash value matches the one the client has. In the Figure above, the client asks the server to provide a proof for the transaction with content=2. The client responds with the values 3, 01, 4567. Upon receiving the response the client has the necessary information to compute 
+the root hash. 
 
-Note: no modeling of the Merkle data structure is required -- this is assumed. 
+Note: The actual contents stored at the nodes are some hash values of the transaction content. 
+Note: No modeling of the Merkle data structure is required -- this is assumed. 
 
 ## Project Delivery
 
