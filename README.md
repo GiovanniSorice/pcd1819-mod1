@@ -75,6 +75,7 @@ Once the client receives the linear sequence of hashes can proceed to compute th
 the root hash. 
 
 Note: The actual contents stored at the nodes are some hash values of the transaction content. 
+
 Note: No modeling of the Merkle data structure is required -- this is assumed. 
 
 ## Project Delivery
