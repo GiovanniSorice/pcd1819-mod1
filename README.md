@@ -58,14 +58,14 @@ To execute the unit tests go on and type:
 You can import the project in your favourite IDE by following the available Import Gradle Project-like wizzard.
 
 ## The Exercises
-The code is commented and you should fill in the missing implementation. The test cases are there to help guide you during the development process.
+The code is commented and you should fill in the missing implementation. Some test cases are there to help guide you during the development process.
 Pay careful attention to them! You can add additional helper methods if you retain them useful.
 
 ![alt text](audit-merkle.png)
 
-Some explanation is due for the merkleClient exercise which takes its name from a well-known hash data structure called a * [Merkle Tree](https://en.wikipedia.org/wiki/Merkle_tree). The data structure has performance benefits w.r.t to linear hash data structures e.g., proof that a transaction is valid is computed in O(log_n) time with n being the overall number of transactions.
+Some explanation is due for the 'merkleClient' exercise which takes its name from a well-known hash data structure called a * [Merkle Tree](https://en.wikipedia.org/wiki/Merkle_tree). The data structure has performance benefits w.r.t to linear hash data structures e.g., proof that a transaction is valid is computed in O(log_n) time with n being the overall number of transactions.
 
-Our exercise models a scenario whereby a client asks an authority (the server) to provide a proof that a transaction it  holds (the client) is valid or not. The server holding the entire or parts of the Merkle Tree provides the client with all the necessary information needed to perform this computation. 
+Our exercise models a scenario whereby a client asks an authority (the server) to provide a proof that a transaction it holds (the client) is valid or not. The server holding the entire or parts of the Merkle Tree provides the client with all the necessary information needed to perform this computation. 
 
 This exercise makes the following assumptions: 
 
@@ -76,12 +76,13 @@ This exercise makes the following assumptions:
 Once the client receives the linear sequence of hashes can proceed to compute the resulting root hash value. A transaction is considered valid if the computed root hash value matches the one the client has. In the Figure above, the client asks the server to provide a proof for the transaction with content=2. The client responds with the values 3, 01, 4567. Upon receiving the response the client has the necessary information to compute 
 the root hash. 
 
-Note: The actual contents stored at the nodes are some hash values of the transaction content. 
+Note: The actual contents stored at the nodes are hash values computed over the content of the transaction. It is assumed that client
+and server use the same cryptographic primitives.
 
-Note: No modeling of the Merkle data structure is required, it is assumed i.e., the server 
-simply sends a sequence of hash values used to compute the root hash
+Note: No modeling of the Merkle data structure is required i.e., the server 
+simply sends a sequence of hash values used to compute the root hash.
 
-Note: No server implementation is required. For this purpose one could use the server implementation
+Note: No server implementation is required. For this purpose, one could use the server implementation
 discussed during the lectures. 
 
 Note: Exception handling of events occurring in the client side is very important.
