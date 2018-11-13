@@ -59,13 +59,18 @@ To execute the tests only go on and type:
 You can import the project in your favourite IDE by following the available Import Gradle Project-like wizzard.
 
 ## The Exercises
-
-![alt text](audit-merkle.png)
-
 The code is commented and you should fill in the missing implementation. The test cases are there to help guide you during the development process.
 Pay careful attention to them! You can add additional helper methods if you retain them useful.
 
-You need to delivery the project following the below criteria evenif some (not all) of those tests fail.
+![alt text](audit-merkle.png)
+
+Some explanation is due for the merkleClient exercise which takes its name from a well-known hash data structure called a * [Merkle Tree](https://en.wikipedia.org/wiki/Merkle_tree). The data structure has performance benefits w.r.t to linear hash data structures e.g., proof that a transaction is valid is computed in O(log_n) time with n being the overall number of transactions.
+
+This exercise models a scenario whereby a client asks an authority (the server) to prove a proof that a transaction it holds is valid or not. The server holding the entire or parts of the Merkle Tree provides the client with all the necessary information needed to perform this computation. 
+This exercise makes the following assumptions: 
+1. the client knows the hash of the merkle tree root;
+2. the server sends the client a linear sequence of hash values.
+
 
 ## Project Delivery
 
