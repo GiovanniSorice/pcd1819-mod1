@@ -60,7 +60,7 @@ You can import the project in your favourite IDE by following the available Impo
 
 ## The Exercises
 
-![alt text](https://bitbucket.org/albadmin/pcd1819-mod1exer/src/master/audit-merkle.png)
+![alt text](audit-merkle.png)
 
 The code is commented and you should fill in the missing implementation. The test cases are there to help guide you during the development process.
 Pay careful attention to them! You can add additional helper methods if you retain them useful.
