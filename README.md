@@ -45,10 +45,9 @@ Once you have retrieved and positioned in the right directory you can build the 
 ```
 
 Gradle will automatically download the necessary project files and definitions needed for this project to compile (i.e., the JUnit library needed for testing).
-If the command was successful, a 'build' directory has been created containing the .class files along with the unit test reports.
-As you might have noticed, tests fail as you need to fill-in the missing code.
+If the command was successful, a 'build' directory has been created, containing other directories, among them a /class directory containing the compiled sources.
 
-To execute the tests only go on and type:
+To execute the unit tests go on and type:
 
 ```
 6. gradle test
@@ -67,8 +66,11 @@ Pay careful attention to them! You can add additional helper methods if you reta
 Some explanation is due for the merkleClient exercise which takes its name from a well-known hash data structure called a * [Merkle Tree](https://en.wikipedia.org/wiki/Merkle_tree). The data structure has performance benefits w.r.t to linear hash data structures e.g., proof that a transaction is valid is computed in O(log_n) time with n being the overall number of transactions.
 
 Our exercise models a scenario whereby a client asks an authority (the server) to provide a proof that a transaction it  holds (the client) is valid or not. The server holding the entire or parts of the Merkle Tree provides the client with all the necessary information needed to perform this computation. 
+
 This exercise makes the following assumptions: 
+
 1. the client knows the hash of the merkle tree root;
+
 2. the server sends the client a linear sequence of hash values.
 
 Once the client receives the linear sequence of hashes can proceed to compute the resulting root hash value. A transaction is considered valid if the computed root hash value matches the one the client has. In the Figure above, the client asks the server to provide a proof for the transaction with content=2. The client responds with the values 3, 01, 4567. Upon receiving the response the client has the necessary information to compute 
@@ -76,7 +78,13 @@ the root hash.
 
 Note: The actual contents stored at the nodes are some hash values of the transaction content. 
 
-Note: No modeling of the Merkle data structure is required -- this is assumed. 
+Note: No modeling of the Merkle data structure is required, it is assumed i.e., the server 
+simply sends a sequence of hash values used to compute the root hash
+
+Note: No server implementation is required. For this purpose one could use the server implementation
+discussed during the lectures. 
+
+Note: Exception handling of events occurring in the client side is very important.
 
 ## Project Delivery
 
