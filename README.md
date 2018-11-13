@@ -66,11 +66,14 @@ Pay careful attention to them! You can add additional helper methods if you reta
 
 Some explanation is due for the merkleClient exercise which takes its name from a well-known hash data structure called a * [Merkle Tree](https://en.wikipedia.org/wiki/Merkle_tree). The data structure has performance benefits w.r.t to linear hash data structures e.g., proof that a transaction is valid is computed in O(log_n) time with n being the overall number of transactions.
 
-This exercise models a scenario whereby a client asks an authority (the server) to prove a proof that a transaction it holds is valid or not. The server holding the entire or parts of the Merkle Tree provides the client with all the necessary information needed to perform this computation. 
+Our exercise models a scenario whereby a client asks an authority (the server) to provide a proof that a transaction it  holds (the client) is valid or not. The server holding the entire or parts of the Merkle Tree provides the client with all the necessary information needed to perform this computation. 
 This exercise makes the following assumptions: 
 1. the client knows the hash of the merkle tree root;
 2. the server sends the client a linear sequence of hash values.
 
+Once the client receives the linear sequence of hashes can proceed to compute the resulting root hash value. A transaction is considered valid if the computed root hash value matches the one the client has.
+
+Note: no modeling of the Merkle data structure is required -- this is assumed. 
 
 ## Project Delivery
 
