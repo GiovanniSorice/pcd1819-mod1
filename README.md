@@ -58,7 +58,9 @@ To execute the tests only go on and type:
 
 You can import the project in your favourite IDE by following the available Import Gradle Project-like wizzard.
 
-### The Exercises
+## The Exercises
+
+![alt text](https://bitbucket.org/albadmin/pcd1819-mod1exer/src/master/audit-merkle.png)
 
 The code is commented and you should fill in the missing implementation. The test cases are there to help guide you during the development process.
 Pay careful attention to them! You can add additional helper methods if you retain them useful.
