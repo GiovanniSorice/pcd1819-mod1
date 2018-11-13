@@ -116,12 +116,7 @@ Failure to meet these criteria can result in you project not being evaluated.
 
 ### Grading and Written Exam
 
-As explained during the classes, exercises contribute by a 30% to the final vote. You can sustain the written exam evenif you have not delivered the exercises.
-However, each exam session has its own set of exercises, that is, if you sustain the written exam of session X but have not yet delivered the exercises of this session,
-you SHOULD (in order to obtain a final vote) deliver the exercises of session X+1.
-
-Session 1 is a special case, the exercises are delivered in a two-step process; first you deliver the first set and after the second one. In the other sessions
-you should deliver all the exercises at bulk.
+As explained during the classes, exercises amount to 3 points and are mandatory. You can sustain the written exam evenif you have not delivered the exercises. However, after each exam session the maximum amount of points will age with a factor of \alpha, that is the roof is computed as: 3 - \alpha * 3. In order to abtain a final vote for the exam, the student should have passed the written exam and delivered the exercises.
 
 Due delivery: November 27, 2018. h.23:59
 
