@@ -116,7 +116,7 @@ Failure to meet these criteria can result in you project not being evaluated.
 
 ### Grading and Written Exam
 
-As explained during the classes, exercises amount to 3 points and are mandatory. You can sustain the written exam evenif you have not delivered the exercises. However, after each exam session the maximum amount of points will age with a factor of \alpha, that is the roof is computed as: 3 - \alpha * 3. In order to abtain a final vote for the exam, the student should have passed the written exam and delivered the exercises.
+As explained during the classes, exercises (mod1 + mod2) amount to 3 points and are mandatory. You can sustain the written exam evenif you have not delivered the exercises. However, after each exam session the maximum amount of points will age with a factor of \alpha, that is the roof is computed as: 3 - \alpha * 3. In order to abtain a final vote for the exam, the student should have passed the written exam and delivered the exercises.
 
 Due delivery: November 27, 2018. h.23:59
 
