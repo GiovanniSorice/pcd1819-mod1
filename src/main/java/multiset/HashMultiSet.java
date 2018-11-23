@@ -1,8 +1,13 @@
 package multiset;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
+
 
 /**
  * <p>A MultiSet models a data structure containing elements along with their frequency count i.e., </p>
@@ -11,16 +16,18 @@ import java.util.List;
  * 
  * <p>MultiSet a = <{1:2}, {2:2}, {3:4}, {10:1}></p>
  * */
-public final class HashMultiSet<T, V> {
+public final class HashMultiSet<T, V extends Number> {
 
 	/**
 	 *XXX: data structure backing this MultiSet implementation. 
 	 */
-	
+	private HashMap<T,V> multiSetMap;
 	/**
 	 * Sole constructor of the class.
 	 **/
-	public HashMultiSet() {/***/}
+	public HashMultiSet() {
+		multiSetMap=new HashMap<T,V>();
+	}
 	
 	
 	/**
@@ -32,7 +39,16 @@ public final class HashMultiSet<T, V> {
 	 * @return V: frequency count of the element in the multiset
 	 * */	
 	public V addElement(T t) {
-		throw new UnsupportedOperationException();		
+		Integer i=1;
+	V freq=multiSetMap.putIfAbsent(t,(V)i);
+
+	if(freq==null)
+		return (V)i;
+
+	Integer nV=(Integer)multiSetMap.get(t)+i;
+		multiSetMap.replace(t,(V)nV);
+
+		return freq;
 	}
 
 	/**
@@ -43,7 +59,7 @@ public final class HashMultiSet<T, V> {
 	 * @return V: true if the element is present, false otherwise.
 	 * */	
 	public boolean isPresent(T t) {
-		throw new UnsupportedOperationException();		
+		return multiSetMap.containsKey(t);
 	}
 	
 	/**
@@ -51,7 +67,9 @@ public final class HashMultiSet<T, V> {
 	 * @return V: frequency count of parameter t ('0' if not present)
 	 * */
 	public V getElementFrequency(T t) {
-		throw new UnsupportedOperationException();		
+	V dV= (V)(Integer)0;
+	V value=multiSetMap.get(t);
+	return value.equals(null)?  dV: value;
 	}
 	
 	
@@ -64,8 +82,21 @@ public final class HashMultiSet<T, V> {
 	 * @param source Path: source of the multiset
 	 * */
 	public void buildFromFile(Path source) throws IOException {
-		throw new UnsupportedOperationException();
-		
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(source.toFile()));
+
+			String line = reader.readLine();
+			while (line != null) {
+				String[] elements = line.split(",");
+				for (String element : elements) {
+					addElement((T) element);
+					System.out.print("	Key: " + element + " Type: " + element.getClass().toString() + ", Value: " + getElementFrequency((T) element) + " Type: " + getElementFrequency((T) element).getClass().toString());
+				}
+				line = reader.readLine();
+			}
+		} catch (IOException e) {
+			throw new IOException("Method should be invoked with a non null file path");
+		}
 	}
 
 	/**
@@ -73,7 +104,15 @@ public final class HashMultiSet<T, V> {
 	 * @param source List<T>: source of the multiset
 	 * */
 	public void buildFromCollection(List<? extends T> source) {
-		throw new UnsupportedOperationException();
+
+		if(source!=null) {
+			source.stream().forEach(element -> {
+				addElement(element);
+				System.out.print("	Key: " + element + " Type: " + element.getClass().toString() + ", Value: " + getElementFrequency((T) element) + " Type: " + getElementFrequency((T) element).getClass().toString());
+			});
+		}else{
+			throw new IllegalArgumentException("Method should be invoked with a non null file path");
+		}
 	}
 	
 	/**
@@ -83,7 +122,16 @@ public final class HashMultiSet<T, V> {
 	 * @return List<T>: linearized version of the multiset represented by this object.
 	 */
 	public List<T> linearize() {
-		throw new UnsupportedOperationException();
+
+		ArrayList<T> linearized=new ArrayList<T>();
+
+		multiSetMap.forEach((k,v)->{
+			for (int i=0; i<(Integer)v; i++){
+				linearized.add(k);
+			}
+		});
+
+		return  linearized;
 	}
 	
 	
