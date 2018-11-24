@@ -1,7 +1,10 @@
 package merkleClient;
+
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.nio.channels.SocketChannel;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,22 +50,64 @@ public class MerkleValidityRequest {
 	 * 	<p>For each transaction the client does the following:</p>
 	 * 		<p>1.: asks for a validityProof for the current transaction</p>
 	 * 		<p>2.: listens for a list of hashes which constitute the merkle nodes contents</p>
-	 * 	<p>Uses the utility method {@link #isTransactionValid(String, String, List<String>) isTransactionValid} </p>
+	 * 	<p>Uses the utility method {@link #isTransactionValid(String, List<String>) isTransactionValid} </p>
 	 * 	<p>method to check whether the current transaction is valid or not.</p>
 	 * */
 	public Map<Boolean, List<String>> checkWhichTransactionValid() throws IOException {
-		//0. Opens a connection with the authority
-		InetSocketAddress remoteAddr = new InetSocketAddress(authIPAddr, authPort);
-		SocketChannel client = SocketChannel.open(remoteAddr);
 
-		System.out.println("Connecting to Server: "+authIPAddr+" on port"+authPort);
-
+		//Inizializzo la mappa da ritornare
 		Map<Boolean, List<String>> validity = new HashMap<>();
+		ArrayList<String> nodiTrue = new ArrayList<>();
+		ArrayList<String> nodiFalse = new ArrayList<>();
+
+		validity.put(true, nodiTrue);
+		validity.put(false, nodiFalse);
 
 
-		return null;
+		try {
+			//0. Opens a connection with the authority
+			Socket cSocket = new Socket(authIPAddr, authPort);
+
+			System.out.println("Connecting to Server: " + authIPAddr + " on port" + authPort);
+
+			PrintWriter out = new PrintWriter(cSocket.getOutputStream(), true);
+
+			for (String request : mRequests) {
+
+				// 1.: asks for a validityProof for the current transaction
+				out.println(request);
+
+				System.out.println("sending: " + request);
+
+				//2.: listens for a list of hashes which constitute the merkle nodes contents
+				BufferedReader reader = new BufferedReader(new InputStreamReader(cSocket.getInputStream()));
+
+				List<String> nodiServer = new ArrayList<>();
+				String line = reader.readLine();
+				while (line != null) {
+					nodiServer.add(line);
+					line = reader.readLine();
+				}
+
+				System.out.println("--- Message received: " + nodiServer);
+
+				/*
+				 * 	<p>Uses the utility method {@link #isTransactionValid(String, String, List<String>) isTransactionValid} </p>
+				 * 	<p>method to check whether the current transaction is valid or not.</p>
+				 */
+				if (isTransactionValid(request, nodiServer)) {
+					nodiTrue.add(request);
+				} else {
+					nodiFalse.add(request);
+				}
+			}
+
+			cSocket.close();
+		}catch (IOException e){
+			e.printStackTrace();
+		}
+		return validity;
 	}
-	
 	/**
 	 * 	Checks whether a transaction 'merkleTx' is part of the merkle tree.
 	 * 
