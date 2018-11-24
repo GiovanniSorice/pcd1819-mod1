@@ -1,9 +1,13 @@
 package merkleClient;
-
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static merkleClient.HashUtil.md5Java;
 
 public class MerkleValidityRequest {
 
@@ -47,7 +51,16 @@ public class MerkleValidityRequest {
 	 * 	<p>method to check whether the current transaction is valid or not.</p>
 	 * */
 	public Map<Boolean, List<String>> checkWhichTransactionValid() throws IOException {
-		throw new UnsupportedOperationException();
+		//0. Opens a connection with the authority
+		InetSocketAddress remoteAddr = new InetSocketAddress(authIPAddr, authPort);
+		SocketChannel client = SocketChannel.open(remoteAddr);
+
+		System.out.println("Connecting to Server: "+authIPAddr+" on port"+authPort);
+
+		Map<Boolean, List<String>> validity = new HashMap<>();
+
+
+		return null;
 	}
 	
 	/**
@@ -60,7 +73,15 @@ public class MerkleValidityRequest {
 	 *  @return: boolean value indicating whether this transaction was validated or not.
 	 * */
 	private boolean isTransactionValid(String merkleTx, List<String> merkleNodes) {
-		throw new UnsupportedOperationException();
+
+		String toVerifyHash= md5Java(merkleTx);
+
+		for (String node : merkleNodes) {
+			toVerifyHash=md5Java(toVerifyHash+node);
+		}
+
+		return toVerifyHash.equals(mRoot);
+
 	}
 
 	/**
