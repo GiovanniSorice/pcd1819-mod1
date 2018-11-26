@@ -83,8 +83,13 @@ public class MerkleValidityRequest {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(cSocket.getInputStream()));
 
 				List<String> nodiServer = new ArrayList<>();
+				System.out.println("--- Line: " + reader.toString());
+
 				String line = reader.readLine();
+				System.out.println("--- Prova: ");
+
 				while (line != null) {
+					System.out.println("--- Message received: " + line);
 					nodiServer.add(line);
 					line = reader.readLine();
 				}
@@ -101,6 +106,8 @@ public class MerkleValidityRequest {
 					nodiFalse.add(request);
 				}
 			}
+
+			out.println("close");
 
 			cSocket.close();
 		}catch (IOException e){
