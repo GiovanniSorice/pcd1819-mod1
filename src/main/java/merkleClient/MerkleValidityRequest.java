@@ -59,42 +59,40 @@ public class MerkleValidityRequest {
 		Map<Boolean, List<String>> validity = new HashMap<>();
 		ArrayList<String> nodiTrue = new ArrayList<>();
 		ArrayList<String> nodiFalse = new ArrayList<>();
-
 		validity.put(true, nodiTrue);
 		validity.put(false, nodiFalse);
 
 
-		try {
-			//0. Opens a connection with the authority
-			Socket cSocket = new Socket(authIPAddr, authPort);
-
-			System.out.println("Connecting to Server: " + authIPAddr + " on port" + authPort);
-
-			PrintWriter out = new PrintWriter(cSocket.getOutputStream(), true);
+		System.out.println("Connecting to Server: " + authIPAddr + " on port " + authPort);
+		Socket cSocket =null;
+		PrintWriter out = null;
+		BufferedReader reader=null;
 
 			for (String request : mRequests) {
-
+				try {
+					//0. Opens a connection with the authority
+					cSocket = new Socket(authIPAddr, authPort);
+					out = new PrintWriter(cSocket.getOutputStream(), true);
+					reader = new BufferedReader(new InputStreamReader(cSocket.getInputStream()));
+				}catch (IOException e){
+					e.printStackTrace();
+				}
 				// 1.: asks for a validityProof for the current transaction
 				out.println(request);
-
 				System.out.println("sending: " + request);
 
 				//2.: listens for a list of hashes which constitute the merkle nodes contents
-				BufferedReader reader = new BufferedReader(new InputStreamReader(cSocket.getInputStream()));
-
 				List<String> nodiServer = new ArrayList<>();
-				System.out.println("--- Line: " + reader.toString());
-
 				String line = reader.readLine();
-				System.out.println("--- Prova: ");
 
-				while (line != null) {
-					System.out.println("--- Message received: " + line);
+
+				while (line != null && !line.equals("end")) {
+					//System.out.println("--- Message received: " + line);
 					nodiServer.add(line);
 					line = reader.readLine();
 				}
 
-				System.out.println("--- Message received: " + nodiServer);
+				System.out.println("--- Messages received: " + nodiServer);
 
 				/*
 				 * 	<p>Uses the utility method {@link #isTransactionValid(String, String, List<String>) isTransactionValid} </p>
@@ -105,14 +103,15 @@ public class MerkleValidityRequest {
 				} else {
 					nodiFalse.add(request);
 				}
+				cSocket.close();
+				out.close();
+				reader.close();
 			}
 
 			out.println("close");
 
-			cSocket.close();
-		}catch (IOException e){
-			e.printStackTrace();
-		}
+
+
 		return validity;
 	}
 	/**
